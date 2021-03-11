@@ -1,16 +1,19 @@
 #include <iostream>
+#include <ctime>
 
-void PlayGame()
+void PrintIntroduction(int Difficulty)
 {
-    std::cout << std::endl;
-    std::cout << "You are a secret agent breaking into a secure server room";
-    std::cout << std::endl;
-    std::cout << "You need to enter the correct codes to continue...";
-    std::cout << std::endl << std::endl;
+    std::cout << "\nYou are a secret agent breaking into a level " << Difficulty;
+    std::cout << " security room...\nYou need to enter the correct codes to continue...\n\n";
+}
 
-    const int CodeA = 2;
-    const int CodeB = 3;
-    const int CodeC = 4;
+bool PlayGame(int Difficulty)
+{
+    PrintIntroduction(Difficulty);
+
+    const int CodeA = rand() % Difficulty + Difficulty;
+    const int CodeB = rand() % Difficulty + Difficulty;
+    const int CodeC = rand() % Difficulty + Difficulty;
 
     const int CodeSum = CodeA + CodeB + CodeC;
     const int CodeProduct = CodeA * CodeB * CodeC;
@@ -31,17 +34,37 @@ void PlayGame()
 
     if (GuessSum == CodeSum && GuessProduct == CodeProduct)
     {
-        std::cout << "You've breaken into the system! Victory!" << std::endl << std::endl;
+        std::cout << "You've breaken into the system level! Great!" << std::endl << std::endl;
+        return true;
     } 
     else 
     {
-        std::cout << "You've entered an incorrect code! Game Over!" << std::endl << std::endl;
+        std::cout << "You've entered an incorrect code! Try again!" << std::endl << std::endl;
+        return false;
     }
 }
 
 int main ()
 {
-    PlayGame();
+    srand(time(NULL));
+
+    int LevelDifficulty = 1;
+    const int MaxDifficulty = 5;
+
+    while (LevelDifficulty <= MaxDifficulty)
+    {
+        bool bLevelComplete = PlayGame(LevelDifficulty);
+
+        std::cin.clear();
+        std::cin.ignore();
+
+        if (bLevelComplete)
+        {
+            ++LevelDifficulty;
+        }
+    }
+
+    std::cout << "\n***Congratulations, you've hacked into the system and completed the game***\n\n";
 
     return 0;
 }
