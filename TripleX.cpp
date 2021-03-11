@@ -25,9 +25,11 @@ class GameText
         std::cout << "There are 3 numbers in the code" << std::endl;
         std::cout << "The codes add-up to: " << CodeSum << std::endl;
         std::cout << "The codes multiply to give: " << CodeProduct << std::endl << std::endl;
+
+        getPlayerGuessCode(CodeSum, CodeProduct);
     }
 
-    public: static void getPlayerGuessCode()
+    public: static void getPlayerGuessCode(int CodeSum, int CodeProduct)
     {
         int GuessA, GuessB, GuessC;
 
@@ -39,6 +41,20 @@ class GameText
 
         int GuessSum = GuessA + GuessB + GuessC;
         int GuessProduct = GuessA * GuessB * GuessC;
+
+        processPlayerGuess(GuessSum, CodeSum, GuessProduct, CodeProduct);
+    }
+
+    public: static void processPlayerGuess(int GuessSum, int CodeSum, int GuessProduct, int CodeProduct)
+    {
+        if (GuessSum == CodeSum && GuessProduct == CodeProduct)
+        {
+            std::cout << "You've breaken into the system! Victory!" << std::endl << std::endl;
+        } 
+        else 
+        {
+            std::cout << "You've entered an incorrect code! Game Over!" << std::endl << std::endl;
+        }
     }
 };
 
@@ -48,7 +64,6 @@ int main ()
 
     g.printStartMessages();
     g.printVariablesProduct();
-    g.getPlayerGuessCode();
 
     return 0;
 }
